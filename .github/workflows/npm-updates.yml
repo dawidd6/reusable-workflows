@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
 
       - name: Run npm
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
           
       - name: Create PR
         uses: peter-evans/create-pull-request@v8

@@ -1,0 +1,34 @@
+name: NPM Updates
+
+on:
+  workflow_call:
+    secrets:
+      personal_access_token:
+        description: 'A GitHub PAT for pushing changes to PR.'
+        required: true
+
+permissions: {}
+
+jobs:
+  npm-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+          
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Run npm
+        run: npm install --ignore-scripts
+          
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.personal_access_token }}
+          delete-branch: true
+          branch: node_modules
+          commit-message: "node_modules: update"
+          title: "node_modules: update"
